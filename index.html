@@ -11,7 +11,7 @@
         script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/ https://fonts.googleapis.com/ https://kit-free.fontawesome.com/;
         style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ https://fonts.googleapis.com/;
         font-src 'self' https://cdnjs.cloudflare.com/ https://fonts.gstatic.com/;
-        img-src 'self' data: https:;
+        img-src 'self' data: https: blob:;
         connect-src 'self';
         frame-ancestors 'none';
         base-uri 'self';
@@ -91,6 +91,348 @@
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Enhanced Image Handling */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Hero Image Special Styling */
+        .hero-image {
+            position: relative;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+            height: min(500px, 60vw);
+            min-height: 300px;
+
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* About Image Styling */
+        .about-image {
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            height: min(500px, 60vw);
+            min-height: 300px;
+           
+        }
+
+        /* Project Image Styling */
+        .project-img {
+            height: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.05);
+        }
+
+        /* Image Placeholder with improved design */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .image-placeholder i {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 15px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .image-placeholder.project {
+            height: 220px;
+        }
+
+        .image-placeholder p {
+            font-weight: 500;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Enhanced lazy loading */
+        img[loading="lazy"] {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        img[loading="lazy"].loaded {
+            opacity: 1;
+        }
+
+        /* Responsive image handling */
+        @media (max-width: 768px) {
+            .hero-image, .about-image {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+        }
+
+        /* Secure Copyright Styles */
+        .copyright.secure {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
+            border-top: 1px solid rgba(37, 99, 235, 0.4);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 15px 0;
+            position: relative;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            width: 100%;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copyright.secure::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 10%, 
+                var(--primary) 50%, 
+                transparent 90%);
+        }
+
+        .copyright.secure::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 10%, 
+                rgba(37, 99, 235, 0.3) 50%, 
+                transparent 90%);
+        }
+
+        .security-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0 20px;
+            gap: 20px;
+        }
+
+        .protection-badge {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+            flex-shrink: 0;
+        }
+
+        .copyright-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .copyright-symbol {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .copyright-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .copyright-year {
+            color: white;
+            font-weight: 600;
+            background: rgba(37, 99, 235, 0.25);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(37, 99, 235, 0.4);
+        }
+
+        .copyright-name {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .rights-reserved {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        .security-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            flex-shrink: 0;
+        }
+
+        .status-indicator {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        .status-text {
+            color: var(--success);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* Animations */
+        @keyframes statusPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% { 
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .copyright.secure {
+                padding: 12px 0;
+                min-height: 50px;
+            }
+            
+            .security-container {
+                gap: 15px;
+                padding: 0 15px;
+            }
+            
+            .protection-badge {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            
+            .copyright-text {
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            
+            .copyright-symbol {
+                font-size: 1rem;
+            }
+            
+            .security-status {
+                padding: 5px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .copyright.secure {
+                padding: 10px 0;
+                min-height: 45px;
+            }
+            
+            .security-container {
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            
+            .copyright-content {
+                gap: 8px;
+            }
+            
+            .copyright-text {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .protection-badge {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* Anti-copy protection */
+        .copyright.secure {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Print protection */
+        @media print {
+            .copyright.secure {
+                display: none !important;
+            }
         }
 
         /* Reduced Motion Support */
@@ -302,54 +644,6 @@
             }
         }
 
-        /* Image Placeholders with lazy loading */
-        .image-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .image-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .image-placeholder i {
-            font-size: clamp(2rem, 6vw, 3rem);
-            margin-bottom: 15px;
-            opacity: 0.9;
-            z-index: 1;
-        }
-
-        .image-placeholder.project {
-            height: 220px;
-        }
-
-        .image-placeholder p {
-            font-weight: 500;
-            text-align: center;
-            z-index: 1;
-        }
-
         /* Header & Navigation with improved accessibility */
         header {
             position: fixed;
@@ -494,21 +788,6 @@
             flex-wrap: wrap;
         }
 
-        .hero-image {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            transform: perspective(1000px) rotateY(-5deg);
-            transition: var(--transition);
-            height: min(500px, 60vw);
-            min-height: 300px;
-        }
-
-        .hero-image:hover {
-            transform: perspective(1000px) rotateY(0deg);
-        }
-
         /* About Section */
         .about-content {
             display: grid;
@@ -569,14 +848,6 @@
             font-size: 0.9rem;
             color: var(--secondary);
             font-weight: 500;
-        }
-
-        .about-image {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            height: min(500px, 60vw);
-            min-height: 300px;
         }
 
         /* Skills Section */
@@ -680,12 +951,6 @@
         .project-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-xl);
-        }
-
-        .project-img {
-            height: 220px;
-            overflow: hidden;
-            position: relative;
         }
 
         .project-card:hover .project-img .image-placeholder {
@@ -1030,6 +1295,7 @@
             font-size: 1.2rem;
             margin-bottom: 20px;
             font-family: 'Playfair Display', serif;
+            text-align: left;
         }
 
         .footer-links ul {
@@ -1058,14 +1324,6 @@
         .footer-links a:hover {
             opacity: 1;
             color: var(--primary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            opacity: 0.7;
         }
 
         /* Back to Top */
@@ -1454,9 +1712,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="hero-image">
+                    <div class="hero-image image-container">
                         <div class="image-placeholder">
                             <i class="fas fa-user" aria-hidden="true"></i>
+                            <img src="ba4089fce9085cba83987fac7bfe84c4.gif" alt="Salaheldin Mohamed - Computer Science and Cybersecurity Student" loading="lazy">
                             <p>Your Professional Photo</p>
                         </div>
                     </div>
@@ -1496,9 +1755,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="about-image">
+                    <div class="about-image image-container">
                         <div class="image-placeholder">
                             <i class="fas fa-code" aria-hidden="true"></i>
+                            <img src="Screenshot 2025-11-02 225005.png" alt="Salaheldin Mohamed working on code" loading="lazy">
                             <p>About Me Image</p>
                         </div>
                     </div>
@@ -1600,9 +1860,10 @@
                 </div>
                 <div class="projects-grid">
                     <article class="project-card" tabindex="0">
-                        <div class="project-img">
+                        <div class="project-img image-container">
                             <div class="image-placeholder project">
                                 <i class="fas fa-laptop-code" aria-hidden="true"></i>
+                                <img src="Screenshot 2025-11-02 225005.png" alt="Responsive Portfolio Website Project" loading="lazy">
                                 <p>Project Screenshot</p>
                             </div>
                             <div class="project-overlay">
@@ -1626,9 +1887,10 @@
                         </div>
                     </article>
                     <article class="project-card" tabindex="0">
-                        <div class="project-img">
+                        <div class="project-img image-container">
                             <div class="image-placeholder project">
                                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <img src="Screenshot 2025-11-02 225005.png" alt="Network Security Analysis Project" loading="lazy">
                                 <p>Cybersecurity Project</p>
                             </div>
                             <div class="project-overlay">
@@ -1652,9 +1914,10 @@
                         </div>
                     </article>
                     <article class="project-card" tabindex="0">
-                        <div class="project-img">
+                        <div class="project-img image-container">
                             <div class="image-placeholder project">
                                 <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                                <img src="Screenshot 2025-11-02 225005.png" alt="E-commerce Platform Project" loading="lazy">
                                 <p>E-commerce Platform</p>
                             </div>
                             <div class="project-overlay">
@@ -1824,13 +2087,35 @@
                     </ul>
                 </div>
                 <div class="footer-contact">
-                    <h3>Contact</h3>
-                    <p>Email: sm1410725@gmail.com</p>
-                    <p>Phone: +201211794736</p>
-                    <p>Location: Alexandria, Egypt</p>
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +201211794736</li>
+                        <li><i class="fas fa-envelope"></i> sm1410725@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Alexandria, Egypt</li>
+                    </ul>
                 </div>
             </div>
-            <p class="copyright">&copy; 2025 Salaheldin Mohamed. All Rights Reserved.</p>
+        </div>
+        
+        <!-- Enhanced Copyright Section -->
+        <div class="copyright secure">
+            <div class="security-container">
+                <div class="protection-badge">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="copyright-content">
+                    <span class="copyright-symbol" aria-hidden="true">Ⓢ</span>
+                    <span class="copyright-text">
+                        <span class="copyright-year">2025</span>
+                        <span class="copyright-name">Salaheldin Mohamed</span>
+                        <span class="rights-reserved">- Protected Content</span>
+                    </span>
+                </div>
+                <div class="security-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Secured</span>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -1840,6 +2125,125 @@
     </a>
 
     <script>
+        // Enhanced copyright protection
+        function initCopyrightProtection() {
+            const copyrightSection = document.querySelector('.copyright.secure');
+            
+            if (!copyrightSection) return;
+            
+            // Prevent right-click on copyright section
+            copyrightSection.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                showSecurityAlert('Copyright protection: Right-click disabled');
+            });
+            
+            // Prevent text selection
+            copyrightSection.addEventListener('selectstart', (e) => {
+                e.preventDefault();
+            });
+            
+            // Detect copy attempts
+            copyrightSection.addEventListener('copy', (e) => {
+                e.preventDefault();
+                showSecurityAlert('Content copying is prohibited');
+            });
+            
+            // Detect cut attempts
+            copyrightSection.addEventListener('cut', (e) => {
+                e.preventDefault();
+                showSecurityAlert('Content cutting is prohibited');
+            });
+        }
+
+        // Security alert function
+        function showSecurityAlert(message) {
+            // Create security notification
+            const alert = document.createElement('div');
+            alert.className = 'security-alert';
+            alert.innerHTML = `
+                <i class="fas fa-shield-exclamation"></i>
+                <span>${message}</span>
+            `;
+            
+            // Add styles for security alert
+            if (!document.querySelector('#security-alert-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'security-alert-styles';
+                styles.textContent = `
+                    .security-alert {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #ef4444;
+                        color: white;
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+                        animation: slideInRight 0.3s ease;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                    }
+                    
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(styles);
+            }
+            
+            document.body.appendChild(alert);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, 3000);
+        }
+
+        // Enhanced lazy loading for images
+        function initLazyLoading() {
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        }
+
+        // Enhanced image handling for responsive design
+        function optimizeImages() {
+            const images = document.querySelectorAll('img');
+            
+            images.forEach(img => {
+                // Add error handling
+                img.addEventListener('error', function() {
+                    this.style.display = 'none';
+                    const placeholder = this.closest('.image-placeholder');
+                    if (placeholder) {
+                        placeholder.style.display = 'flex';
+                    }
+                });
+                
+                // Add loading state
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+            });
+        }
+
         // Security: Generate CSRF Token
         function generateCSRFToken() {
             const token = Array.from(crypto.getRandomValues(new Uint8Array(32)))
@@ -2104,18 +2508,6 @@
 
         window.addEventListener('scroll', optimizeScrollHandler, { passive: true });
 
-        // Lazy loading for future image implementation
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
-                    observer.unobserve(img);
-                }
-            });
-        });
-
         // Initialize animations with performance optimization
         function initAnimations() {
             const elements = document.querySelectorAll('.skill-category, .project-card, .about-image, .stat, .certificate-content');
@@ -2146,12 +2538,10 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             initAnimations();
+            initLazyLoading();
+            optimizeImages();
+            initCopyrightProtection();
             window.addEventListener('scroll', animateOnScroll, { passive: true });
-            
-            // Add lazy loading to future images
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
         });
 
         // Error boundary for JavaScript errors
@@ -2169,14 +2559,15 @@
             showNotification('You are currently offline. Some features may not work.', 'error');
         });
 
-        // Prevent right-click context menu (optional security measure)
+        // Enhanced image protection
         document.addEventListener('contextmenu', (e) => {
             if (e.target.tagName === 'IMG') {
                 e.preventDefault();
+                showSecurityAlert('Image protection: Right-click disabled');
             }
         });
 
-        // Prevent image drag (optional security measure)
+        // Enhanced image drag protection
         document.addEventListener('dragstart', (e) => {
             if (e.target.tagName === 'IMG') {
                 e.preventDefault();
